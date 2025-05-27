@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import CustomInput from './CustomInput';
+import Input from './common/Input.tsx';
+import { emailRegex, passwordRegex } from '../variables/regex.ts';
+import Button from './common/Button.tsx';
 
 interface SigninProps {
   onSubmit: (data: SigninData) => void;
@@ -37,11 +39,11 @@ const Signin: React.FC<SigninProps> = ({ onSubmit }) => {
 
     const newErrors: SigninErrors = {};
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (!emailRegex.test(formData.email)) {
       newErrors.email = 'Неверный формат email';
     }
 
-    if (!/^(?=.*[a-zA-Z])(?=.*\d).{6,}$/.test(formData.password)) {
+    if (!passwordRegex.test(formData.password)) {
       newErrors.password =
         'Пароль должен содержать буквы, цифры и быть не короче 6 символов';
     }
@@ -64,7 +66,7 @@ const Signin: React.FC<SigninProps> = ({ onSubmit }) => {
       className='bg-white p-6 rounded-lg shadow-md space-y-4'
     >
       <h2 className='text-xl font-bold text-center'>Вход</h2>
-      <CustomInput
+      <Input
         label='Email'
         name='email'
         type='email'
@@ -76,7 +78,7 @@ const Signin: React.FC<SigninProps> = ({ onSubmit }) => {
         error={errors.email}
       />
 
-      <CustomInput
+      <Input
         label='Пароль'
         name='password'
         type='password'
@@ -88,12 +90,7 @@ const Signin: React.FC<SigninProps> = ({ onSubmit }) => {
         error={errors.password}
       />
 
-      <button
-        type='submit'
-        className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition'
-      >
-        Войти
-      </button>
+      <Button type='submit'>Войти</Button>
     </form>
   );
 };

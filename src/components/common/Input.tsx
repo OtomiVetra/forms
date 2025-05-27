@@ -1,9 +1,5 @@
-type InputProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'size'
->;
-
-interface CustomInputProps extends InputProps {
+interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   required?: boolean;
   description?: string;
@@ -15,7 +11,7 @@ interface CustomInputProps extends InputProps {
   icon?: React.ReactNode;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({
+const Input: React.FC<InputProps> = ({
   label,
   required,
   description,
@@ -85,4 +81,4 @@ const CustomInput: React.FC<CustomInputProps> = ({
   );
 };
 
-export default CustomInput;
+export default Input;

@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import CustomInput from './CustomInput';
+import Input from './common/Input.tsx';
+import {
+  emailRegex,
+  passwordRegex,
+  nicknameRegex,
+} from '../variables/regex.ts';
+import Button from './common/Button.tsx';
 
 interface SignupProps {
   onSubmit: (data: SignupData) => void;
@@ -48,12 +54,12 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
       newErrors.name = 'Введите имя';
     }
 
-    if (!/^[a-zA-Z][a-zA-Z0-9_]{2,}$/.test(formData.nickname)) {
+    if (!nicknameRegex.test(formData.nickname)) {
       newErrors.nickname =
         'Ник должен начинаться с буквы и содержать минимум 3 символа';
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    if (!emailRegex.test(formData.email)) {
       newErrors.email = 'Неверный формат email';
     }
 
@@ -61,7 +67,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
       newErrors.gender = 'Выберите пол';
     }
 
-    if (!/^(?=.*[a-zA-Z])(?=.*\d).{6,}$/.test(formData.password)) {
+    if (!passwordRegex.test(formData.password)) {
       newErrors.password =
         'Пароль должен содержать буквы и цифры и быть не короче 6 символов';
     }
@@ -96,7 +102,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
     >
       <h2 className='text-xl font-bold text-center'>Регистрация</h2>
 
-      <CustomInput
+      <Input
         label='Имя'
         name='name'
         type='text'
@@ -108,7 +114,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
         error={errors.name}
       />
 
-      <CustomInput
+      <Input
         label='Ник'
         name='nickname'
         type='text'
@@ -121,7 +127,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
         error={errors.nickname}
       />
 
-      <CustomInput
+      <Input
         label='Почта'
         name='email'
         type='email'
@@ -166,7 +172,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
         )}
       </div>
 
-      <CustomInput
+      <Input
         label='Пароль'
         name='password'
         type='password'
@@ -178,7 +184,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
         error={errors.password}
       />
 
-      <CustomInput
+      <Input
         label='Повторите пароль'
         name='confirmPassword'
         type='password'
@@ -190,12 +196,7 @@ const Signup: React.FC<SignupProps> = ({ onSubmit }) => {
         error={errors.confirmPassword}
       />
 
-      <button
-        type='submit'
-        className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition'
-      >
-        Зарегистрироваться
-      </button>
+      <Button type='submit'>Зарегистрироваться</Button>
     </form>
   );
 };
